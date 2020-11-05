@@ -12,6 +12,7 @@ repositories {
     maven {
         url = uri('http://repo.maven.apache.org/maven2')
     }
+    mavenCentral()
 }
 
 dependencies {
