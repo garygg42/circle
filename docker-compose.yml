@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  elastic-feature-test:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: elastic-feature-test
+    environment:
+      - node.name=elastic-feature-test
+      - cluster.initial_master_nodes=elastic-feature-test
+    ports:
+      - 9200:9200
+    networks:
+      - circletest-feature-test
+
+  circletest:
+    build: .
+    container_name: circletest
+    ports:
+      - 8501:8501
+    networks:
+      - circletest-feature-test
+
+networks:
+  circletest-feature-test:
+    driver: bridge
