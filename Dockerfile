@@ -1,6 +1,6 @@
 FROM openjdk:11
 
-ARG JAR_FILE=target/someproject-1.0-SNAPSHOT-jar-with-dependencies.jar
+ARG JAR_FILE=build/libs/all-in-one-jar-1.0-SNAPSHOT.jar
 
 # ARG JAR_LIB_FILE=target/lib/
 
