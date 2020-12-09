@@ -10,7 +10,7 @@ parameters:
 
   run_workflow_acceptance-tests:
     default: true
-    type: false
+    type: boolean
 
 jobs:
   build:
@@ -72,7 +72,6 @@ workflows:
     jobs:
       - build
   run_acceptance_tests:
-    when:
-      - equal: << pipeline.parameters.run_workflow_acceptance-tests >>
+    when: << pipeline.parameters.run_workflow_acceptance-tests >>
     jobs:
       - acceptance-tests
