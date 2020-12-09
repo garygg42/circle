@@ -72,6 +72,7 @@ workflows:
     jobs:
       - build
   run_acceptance_tests:
-    when: << pipeline.parameters.run_workflow_acceptance-tests >>
+    when:
+      - equal: << pipeline.parameters.run_workflow_acceptance-tests >>
     jobs:
       - acceptance-tests
