@@ -4,10 +4,6 @@
 #
 version: 2.1
 parameters:
-  run_workflow_build:
-    default: true
-    type: boolean
-
   run_workflow_acceptance-tests:
     default: false
     type: boolean
@@ -69,9 +65,10 @@ jobs:
 workflows:
   version: 2
   build_client_and_servers:
+    when:
+      not: << pipeline.parameters.run_workflow_acceptance-tests >>
     jobs:
       - build
   run_acceptance-tests:
-    when: << pipeline.parameters.run_workflow_acceptance-tests >>
     jobs:
       - acceptance-tests
