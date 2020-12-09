@@ -10,7 +10,7 @@ jobs:
       - image: circleci/openjdk:8-jdk
       - image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
         environment:
-            - cluster.name: group-project-test-cluster
+            - cluster.name: feature-tests-cluster
             - xpack.security.enabled: false
             - transport.host: localhost
             - network.host: 127.0.0.1
@@ -48,3 +48,17 @@ jobs:
 
       # run tests!
       - run: gradle test
+
+  acceptance-tests:
+    docker:
+      - image: circleci/openjdk:11.0.8-jdk
+    steps:
+      - checkout
+      - run: echo "$(pwd)"
+      - run: echo "acceptance tests"
+
+workflows:
+  version: 2
+  build_client_and_servers:
+    jobs:
+      - build
