@@ -2,7 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
-version: 2
+version: 2.1
 parameters:
   run_workflow_build:
     default: true
@@ -72,6 +72,6 @@ workflows:
     jobs:
       - build
   run_acceptance-tests:
+    when: << pipeline.parameters.run_workflow_acceptance-tests >>
     jobs:
       - acceptance-tests
-        when: << pipeline.parameters.run_workflow_acceptance-tests >>
