@@ -8,13 +8,10 @@ parameters:
     default: true
     type: boolean
 
-  run_workflow_test:
+  run_workflow_acceptance-tests:
     default: true
     type: false
 
-  run_workflow_deploy:
-    default: false
-    type: boolean
 jobs:
   build:
     docker:
@@ -74,7 +71,7 @@ workflows:
   build_client_and_servers:
     jobs:
       - build
-  acceptance-tests:
-    when: << pipeline.parameters.run_workflow_test >>
+  run_acceptance_tests:
+    when: << pipeline.parameters.run_workflow_acceptance-tests >>
     jobs:
       - acceptance-tests
