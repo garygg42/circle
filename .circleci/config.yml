@@ -3,6 +3,18 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: 2
+parameters:
+  run_workflow_build:
+    default: true
+    type: boolean
+
+  run_workflow_test:
+    default: true
+    type: false
+
+  run_workflow_deploy:
+    default: false
+    type: boolean
 jobs:
   build:
     docker:
@@ -62,3 +74,7 @@ workflows:
   build_client_and_servers:
     jobs:
       - build
+  acceptance-tests:
+    when: << pipeline.parameters.run_workflow_test >>
+    jobs:
+      - acceptance-tests
