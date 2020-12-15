@@ -2,9 +2,10 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
+
 version: 2.1
 parameters:
-  run_workflow_acceptance-tests:
+  run_acceptance-tests:
     default: false
     type: boolean
 
@@ -12,7 +13,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/openjdk:11.0.8-jdk
       - image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
         environment:
             - cluster.name: feature-tests-cluster
@@ -36,40 +37,37 @@ jobs:
 
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: gradle dependencies
-
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-
-      # run tests!
-      - run: gradle test
-
+      - unless:
+          condition: << pipeline.parameters.run_acceptance-tests >>
+          steps:
+           - run: echo BUILD
   acceptance-tests:
     docker:
-      - image: circleci/openjdk:11.0.8-jdk
+      - image: circleci/node:jessie-browsers
     steps:
       - checkout
-      - run: echo "$(pwd)"
-      - run: echo "acceptance tests"
+      - when:
+         condition: << pipeline.parameters.run_acceptance-tests >>
+         steps:
+           - run: echo Acceptance tests
+           - run: mkdir test-reports
+           - run:
+               name: Download Selenium
+               command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+           - run:
+               name: Start Selenium
+               command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+               background: true
+
+orbs:
+  node: circleci/node@4.1.0
 
 workflows:
   version: 2
   build_client_and_servers:
-    when:
-      not: << pipeline.parameters.run_workflow_acceptance-tests >>
     jobs:
-      - build
-  run_acceptance-tests:
-    when: << pipeline.parameters.run_workflow_acceptance-tests >>
-    jobs:
+      - build:
+          filters:
+            branches:
+              only: /submit_.*/
       - acceptance-tests
