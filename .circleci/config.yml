@@ -67,4 +67,3 @@ workflows:
   build_client_and_servers:
     jobs:
       - build
-      - acceptance-tests
