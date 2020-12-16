@@ -4,10 +4,6 @@
 #
 
 version: 2.1
-parameters:
-  run_acceptance-tests:
-    default: false
-    type: boolean
 
 jobs:
   build:
@@ -37,27 +33,21 @@ jobs:
 
     steps:
       - checkout
-      - unless:
-          condition: << pipeline.parameters.run_acceptance-tests >>
-          steps:
-           - run: echo BUILD
+      - run: echo BUILD
   acceptance-tests:
     docker:
       - image: circleci/node:jessie-browsers
     steps:
       - checkout
-      - when:
-         condition: << pipeline.parameters.run_acceptance-tests >>
-         steps:
-           - run: echo Acceptance tests
-           - run: mkdir test-reports
-           - run:
-               name: Download Selenium
-               command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
-           - run:
-               name: Start Selenium
-               command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
-               background: true
+      - run: echo Acceptance tests
+      - run: mkdir test-reports
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
 
 orbs:
   node: circleci/node@4.1.0
