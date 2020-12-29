@@ -4,17 +4,14 @@ import org.apache.http.HttpHost;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * Unit test for simple App.
- */
 public class AppTest {
-    /**
-     * Rigorous Test :-)
-     */
+
+    @Ignore
     @Test
     public void shouldAnswerWithTrue() throws Exception{
         for (int i = 0; i < 20; i++) {
