@@ -5,12 +5,16 @@ jobs:
     steps:
       - checkout
       - cloudrun/init
+      - gradle/build
       - run:
           command: |
             pwd
       - run:
           command: |
             ls -la
+      - run:
+          command: |
+            echo ${HOME}
       - cloudrun/create_gke_cluster:
           cluster-name: 'example-cluster-${CIRCLE_BUILD_NUM}'
           enable-stackdriver-kubernetes: true
