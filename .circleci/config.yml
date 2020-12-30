@@ -5,6 +5,12 @@ jobs:
     steps:
       - checkout
       - cloudrun/init
+      - run:
+          command: |
+            pwd
+      - run:
+          command: |
+            ls -la
       - cloudrun/create_gke_cluster:
           cluster-name: 'example-cluster-${CIRCLE_BUILD_NUM}'
           enable-stackdriver-kubernetes: true
