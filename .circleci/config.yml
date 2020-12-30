@@ -5,7 +5,9 @@ jobs:
     steps:
       - checkout
       - cloudrun/init
-      - gradle/build
+      - run:
+          command: |
+            gradlew build
       - run:
           command: |
             pwd
