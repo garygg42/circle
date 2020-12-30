@@ -4,7 +4,6 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - checkout
-      - cloudrun/init
       - run:
           command: |
             gradlew build
@@ -17,6 +16,7 @@ jobs:
       - run:
           command: |
             echo ${HOME}
+      - cloudrun/init
       - cloudrun/create_gke_cluster:
           cluster-name: 'example-cluster-${CIRCLE_BUILD_NUM}'
           enable-stackdriver-kubernetes: true

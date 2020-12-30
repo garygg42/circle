@@ -1,6 +1,6 @@
 FROM openjdk:11
 
-ARG JAR_FILE=/home/circleci/project/build/libs/someproject-1.0-SNAPSHOT.jar
+ARG JAR_FILE=build/libs/someproject-1.0-SNAPSHOT.jar
 
 # ARG JAR_LIB_FILE=target/lib/
 
