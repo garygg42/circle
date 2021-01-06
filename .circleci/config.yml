@@ -4,9 +4,7 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - checkout
-      - run:
-          command: |
-            ./gradlew build
+      - gradle/test
       - run:
           command: |
             pwd
