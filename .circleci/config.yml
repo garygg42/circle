@@ -6,15 +6,11 @@ jobs:
       - checkout
       - run:
           command: |
-            gradlew build
+            ./gradlew build
       - run:
           command: |
             pwd
-      - run:
-          command: |
             ls -la
-      - run:
-          command: |
             echo ${HOME}
       - cloudrun/init
       - cloudrun/create_gke_cluster:
