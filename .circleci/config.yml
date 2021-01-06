@@ -4,7 +4,9 @@ jobs:
       - image: circleci/openjdk:11.0.8-jdk
     steps:
       - checkout
-      - gradle/test
+      - run:
+          command: |
+            ./gradlew build
       - run:
           command: |
             pwd
